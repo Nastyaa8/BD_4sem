@@ -1,0 +1,6 @@
+SELECT 
+    A.ID, 
+    A.Name
+FROM Table_A A
+FULL OUTER JOIN Table_B B ON A.ID = B.ID
+WHERE B.ID IS NULL;

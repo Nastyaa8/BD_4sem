@@ -1,0 +1,63 @@
+USE univer;
+GO
+
+
+SELECT * FROM sys.triggers;
+SELECT * FROM sys.trigger_events;
+GO
+
+DECLARE @sql NVARCHAR(MAX) = N'';
+SELECT @sql += 
+    'DROP TRIGGER IF EXISTS ' + 
+    QUOTENAME(SCHEMA_NAME(o.schema_id)) + '.' + QUOTENAME(t.name) + ';' + CHAR(13)
+FROM sys.triggers t
+JOIN sys.objects o ON t.parent_id = o.object_id
+WHERE t.is_ms_shipped = 0; 
+
+PRINT @sql;
+EXEC sp_executesql @sql;
+GO
+
+
+SELECT * FROM FACULTY;
+GO
+
+
+CREATE TRIGGER Fac_INSTEAD_OF
+ON FACULTY
+INSTEAD OF DELETE
+AS
+BEGIN
+    RAISERROR(N'Нельзя удалить факультет!', 16, 1);
+    RETURN;
+END;
+GO
+
+
+DELETE FROM FACULTY WHERE FACULTY = 'IT';
+GO
+
+
+SELECT * FROM TEACHER;
+GO
+
+
+CREATE TRIGGER TEACHER_INSTEAD_OF
+ON TEACHER
+INSTEAD OF INSERT
+AS
+BEGIN
+    INSERT INTO TEACHER(TEACHER, TEACHER_NAME, GENDER, PULPIT) 
+    VALUES ('NOA', 'Olga Alexandrovna Nistyuk', 'F', 'ISIT');
+    RETURN;
+END;
+GO
+
+
+INSERT INTO TEACHER(TEACHER, TEACHER_NAME, GENDER, PULPIT) 
+VALUES ('NOA', 'Olga Alexandrovna Nistyuk', '', 'ISIT');
+GO
+
+
+SELECT * FROM TEACHER WHERE TEACHER = 'NOA';
+GO

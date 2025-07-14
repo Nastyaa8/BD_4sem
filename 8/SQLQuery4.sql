@@ -1,0 +1,6 @@
+CREATE VIEW Лекционные_аудитории AS
+SELECT 
+    AUDITORIUM AS Код, 
+    AUDITORIUM_NAME AS Наименование_аудитории
+FROM AUDITORIUM
+WHERE AUDITORIUM_TYPE LIKE 'LK%';

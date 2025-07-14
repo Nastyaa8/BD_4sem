@@ -1,0 +1,7 @@
+CREATE VIEW Количество_кафедр AS
+SELECT 
+    f.FACULTY_NAME AS Факультет, 
+    COUNT(p.PULPIT) AS Количество_кафедр
+FROM FACULTY f
+LEFT JOIN PULPIT p ON f.FACULTY = p.FACULTY
+GROUP BY f.FACULTY_NAME;

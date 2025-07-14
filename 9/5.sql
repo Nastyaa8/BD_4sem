@@ -1,0 +1,13 @@
+DECLARE @IDSTUDENT INT = 1001; 
+DECLARE @NOTE INT;
+
+
+SELECT @NOTE = NOTE
+FROM PROGRESS
+WHERE IDSTUDENT = @IDSTUDENT;
+
+
+IF @NOTE >= 8
+    PRINT 'Хороший студент';
+ELSE
+    PRINT 'Нужно подтянуть учебу';
